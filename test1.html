@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>저녁 메뉴 맞추기</title>
+  </head>
+    <script>
+    /// 정답 = 카레라이스 ///
+
+    // 초기 변수 설정
+    let rolling = false;  // 반복 여부
+    let life = 5;
+    let money = 10000;
+    let answer = 0;
+    let count = 5;
+    let taskCount = 0;
+    let end = 0;
+    let chosenIngredients = [];
+
+    // 재료 가격 설정
+    const prices = {
+      감자: 1500,
+      쇠고기: 8000,
+      파: 500,
+      양파: 1000,
+      당근: 1200,
+      김치: 3000,
+      밥: 1000,
+      면: 1500,
+      굴소스: 2000,
+      스팸: 3500
+    };
+
+    // 중복체크용 배열 
+    const ingredients = ["감자", "쇠고기", "파", "양파", "당근", "김치", "밥", "면", "굴소스", "스팸"];
+
+    alert("오늘 학원을 빠져먹은 나는 엄마에게 혼났다..");
+    alert("윽, 이게 아빠 귀에 들어가면 엄청 맞을 거야!");
+    alert("[ 아들 ]\n엄마 죄송해요.. 제발 아빠한테는 말하지 말아주세요..ㅠㅠㅠ");
+    alert("[ 엄마 ]\n아들아, 아빠한테도 혼나고 싶지 않다면 특별히 이 엄마가 퀴즈를 주마. 내일 저녁메뉴에 들어갈 재료 5가지를 맞춰보거라 아들아!");
+
+    while (life > 0) {
+      if (answer === 5 && rolling === true && end === 1) {
+              alert("Game Clear. 다음 날, 하하호호 웃으며 가족끼리 맛있는 저녁을 먹었다!");
+              document.write("END001: 행복한 우리 가족");
+              break;
+            }
+
+      alert("남은 목숨: " + life + ", 잔액: " + money + "원");
+
+      let choice = prompt("구매 | 탐색 | 집안일 중 하나를 선택하세요.");
+
+      switch (choice) {
+        case "구매":
+        while (count > 0) {
+            let ingredient = prompt("다섯 가지 재료를 고르세요!\n감자(1500원)\n쇠고기(8000원)\n파(500원)\n양파(1000원)\n당근(1200원)\n김치(3000원)\n밥(1000원)\n면(1500원)\n굴소스(2000원)\n스팸(3500원)");
+            if(ingredient === null){
+              break;
+            }
+            else{
+              if (!ingredients.includes(ingredient)) {
+                alert("잘못된 입력입니다! 올바른 재료를 입력하세요.");
+                continue;
+              }
+              if (chosenIngredients.includes(ingredient)) {
+                alert("이미 선택한 재료입니다! 다른 재료를 선택하세요.");
+                continue;
+              }
+              if (money < prices[ingredient]) {
+                alert("잔액이 부족합니다! 다른 재료를 선택하거나 집안일을 통해 돈을 벌어보세요.");
+                break;
+              }
+              chosenIngredients.push(ingredient);
+              money -= prices[ingredient];
+              if (["감자", "쇠고기", "양파", "당근", "밥"].includes(ingredient)) {
+                answer += 1;
+                count--;
+              } else {
+                count--;
+              }
+              if (answer === 5) {
+                alert("정답! 엄마가 미소를 지으며 저녁을 준비합니다.");
+                rolling = true;
+                end = 1;
+                break;
+              }
+            }
+          }
+          if (answer !== 5 && count === 0) {
+            life--;
+            taskCount = 0;
+            count = 5;
+            answer = 0;
+            money = 10000;
+            alert("윽.. 이 재료들이 아닌 모양이다..");
+          }
+          chosenIngredients = [];
+          break;
+
+        case "탐색":
+          if (life === 5) alert("[ 아들 ]\n엄마가 고기 어쩌고 중얼거리시던데..");
+          else if (life === 4) alert("[ 아들 ]\n식이섬유가 풍부할 수 밖에 없겠는걸?");
+          else if (life === 3) alert("[ 아들 ]\n강한 향신료 냄새가 난다!");
+          else if (life === 2) alert("[ 아들 ]\n아빠가 면을 싫어해");
+          else if (life === 1) alert("[ 아들 ]\n요리 색깔이 노란색이야!");
+          break;
+
+        case "집안일":
+          if(taskCount === 1){
+            alert("[ 엄마 ]\n오늘 해야 할 집안일은 모두 끝났단다 아가.");
+            break;
+          }
+          let task = "";
+          let clickCount = 0;
+          let target = 120/life;
+          if (life === 5) task = "창문 닦기";
+          else if (life === 4) task = "마당 청소";
+          else if (life === 3) task = "방 청소";
+          else if (life === 2) task = "설거지";
+          else if (life === 1) task = "쓰레기 버리기";
+          let tasking = confirm(task + "를 도와드리자!");
+          if(!tasking){
+            break;
+          }
+          else{
+            while (clickCount < target) {
+              alert(task + " 중... (확인: " + (clickCount + 1) + "|" + target + ")");
+              clickCount++;
+            }
+            alert(task + " 완료! 정말 힘들었어..! 1만원을 받았다.");
+            money += 10000;
+            clickCount = 0;
+            taskCount++;
+            break;
+          }
+
+        default:
+          alert("올바른 선택을 해주세요!");
+          break;
+      }
+
+      if (life === 0) {
+        alert("Game Over! 결국 아빠에게 크게 혼났다..");
+        document.write("END002: 죄송해요.. 엄마 아빠")
+        break;
+      }
+    }
+      
+    </script>
+  </body>
+</html>
