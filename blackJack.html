@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>블랙잭</title>
+  </head>
+  <body>
+    <script>
+      let mySumCal = 0;
+      let dealSumCal = 0;
+      let countingACal = 0;
+      let countingACal2 = 0;
+      let startTurn = 0;
+      let myCard = [];
+      let dealCard = [];
+      let mySum = 0;
+      let dealSum = 0;
+      let myTurnChk = 0;
+      let dealTurnChk = 0;
+      let countingA = 0;
+      let countingA2 = 0;
+      let myTurn;
+
+      function getRandomCard() {
+        let num = Math.floor(Math.random() * 13) + 1;
+        return num;
+      }
+      // 내 카드 합산기
+      function calculateMySum() {
+        mySumCal = 0;
+        countingACal = 0;
+        for (let i = 0; i < myCard.length; i++) {
+          if (myCard[i] === "J" || myCard[i] === "Q" || myCard[i] === "K") {
+            mySumCal += 10;
+          } else if (myCard[i] === "A") {
+            mySumCal += 11;
+            countingACal += 1;
+          } else {
+            mySumCal += myCard[i];
+          }
+        }
+        while (mySumCal > 21 && countingACal > 0) {
+          mySumCal -= 10;
+          countingACal -= 1;
+        }
+        return mySumCal;
+      }
+      // 딜러 카드 합산기
+      function calculateDealSum() {
+        dealSumCal = 0;
+        countingACal2 = 0;
+        for (let i = 0; i < dealCard.length; i++) {
+          if (
+            dealCard[i] === "J" ||
+            dealCard[i] === "Q" ||
+            dealCard[i] === "K"
+          ) {
+            dealSumCal += 10;
+          } else if (dealCard[i] === "A") {
+            dealSumCal += 11;
+            countingACal2 += 1;
+          } else {
+            dealSumCal += dealCard[i];
+          }
+        }
+
+        // 21넘으면 11에서 1로 바꾸기
+        while (dealSumCal > 21 && countingACal2 > 0) {
+          dealSumCal -= 10;
+          countingACal2 -= 1;
+        }
+        return dealSumCal;
+      }
+
+      alert("블랙잭에 오신걸 환영합니다.");
+      alert("카드를 받아 각 카드의 숫자 합이 21이 되게끔 만들면 됩니다.");
+
+      while (myTurnChk !== 1 && dealTurnChk !== 1) {
+        /// 시작 전 ///
+        //각자 카드 두 장씩 뽑기
+        if (startTurn === 0) {
+          for (let i = 0; i < 2; i++) {
+            let value = getRandomCard();
+            switch (value) {
+              case 1:
+                myCard.push("A");
+                break;
+              case 11:
+                myCard.push("J");
+                break;
+              case 12:
+                myCard.push("Q");
+                break;
+              case 13:
+                myCard.push("K");
+                break;
+              default:
+                myCard.push(value);
+                break;
+            }
+
+            value = getRandomCard();
+            switch (value) {
+              case 1:
+                dealCard.push("A");
+                break;
+              case 11:
+                dealCard.push("J");
+                break;
+              case 12:
+                dealCard.push("Q");
+                break;
+              case 13:
+                dealCard.push("K");
+                break;
+              default:
+                dealCard.push(value);
+                break;
+            }
+          }
+        }
+
+        // 둘 중 하나가 버스트 or 블랙잭이면 강종
+        // 혹시 모르니까 다시 한 번 합산
+        mySum = calculateMySum();
+        dealSum = calculateDealSum();
+
+        if (dealSum > 21 || mySum > 21) {
+          myTurnChk = 1;
+          dealTurnChk = 1;
+          break;
+        } else if (mySum === 21 || dealSum === 21) {
+          myTurnChk = 1;
+          dealTurnChk = 1;
+          break;
+        }
+
+        /// 내 턴 ///
+        if (calculateMySum() >= 21) {
+          myTurnChk = 1;
+          continue;
+        } else {
+          if (myTurnChk === 0) {
+            if (startTurn === 0) {
+              myTurn = confirm(
+                "[ 플레이어의 턴 ]\n플레이어의 카드: " +
+                  myCard +
+                  "\n딜러의 카드: " +
+                  dealCard[0] +
+                  "\n카드를 뽑으시겠습니까? (확인/취소)"
+              );
+              startTurn = 1;
+            } else {
+              myTurn = confirm(
+                "[ 플레이어의 턴 ]\n플레이어의 카드: " +
+                  myCard +
+                  "\n딜러의 카드: " +
+                  dealCard +
+                  "\n카드를 뽑으시겠습니까? (확인/취소)"
+              );
+            }
+
+            if (myTurn === true) {
+              let value = getRandomCard();
+              switch (value) {
+                case 1:
+                  myCard.push("A");
+                  break;
+                case 11:
+                  myCard.push("J");
+                  break;
+                case 12:
+                  myCard.push("Q");
+                  break;
+                case 13:
+                  myCard.push("K");
+                  break;
+                default:
+                  myCard.push(value);
+                  break;
+              }
+            } else {
+              myTurnChk = 1;
+              for (let i = 0; i < myCard.length; i++) {
+                if (
+                  myCard[i] === "J" ||
+                  myCard[i] === "Q" ||
+                  myCard[i] === "K"
+                ) {
+                  mySum += 10;
+                } else if (myCard[i] === "A") {
+                  mySum += 11;
+                  countingA += 1;
+                } else {
+                  mySum += myCard[i];
+                }
+              }
+              while (mySum > 21 && countingA > 0) {
+                mySum -= 10; // A를 11에서 1로 변환
+                countingA -= 1;
+              }
+            }
+          }
+        }
+
+        /// 딜러 턴 ///
+
+        if (dealTurnChk === 0) {
+          let dealTurn = alert(
+            "[ 딜러의 턴 ]\n당신의 카드: " +
+              myCard +
+              "\n딜러의 카드: " +
+              dealCard +
+              "\n자동으로 진행됩니다."
+          );
+
+          if (calculateDealSum() < 17) {
+            // 딜러가 카드를 뽑는 단계
+            while (calculateDealSum() < 17) {
+              let value = getRandomCard();
+              switch (value) {
+                case 1:
+                  dealCard.push("A");
+                  break;
+                case 11:
+                  dealCard.push("J");
+                  break;
+                case 12:
+                  dealCard.push("Q");
+                  break;
+                case 13:
+                  dealCard.push("K");
+                  break;
+                default:
+                  dealCard.push(value);
+                  break;
+              }
+
+              // 카드 추가하고 합계 재생성하기기
+              for (let i = 0; i < dealCard.length; i++) {
+                if (
+                  dealCard[i] === "J" ||
+                  dealCard[i] === "Q" ||
+                  dealCard[i] === "K"
+                ) {
+                  dealSum += 10;
+                } else if (dealCard[i] === "A") {
+                  dealSum += 11;
+                  countingA2 += 1;
+                } else {
+                  dealSum += dealCard[i];
+                }
+              }
+
+              // 21넘으면 11에서 1로 바꾸기
+              while (dealSum > 21 && countingA2 > 0) {
+                dealSum -= 10;
+                countingA2 -= 1;
+              }
+
+              alert(
+                "[ 딜러의 턴 ]\n플레이어의 카드: " +
+                  myCard +
+                  "\n딜러의 카드: " +
+                  dealCard
+              );
+            }
+          }
+        }
+      }
+      mySum = calculateMySum();
+      dealSum = calculateDealSum();
+      // 둘 다 버스트 일 때
+      if (mySum > 21 && dealSum > 21) {
+        document.write(
+          "둘 다 버스트 (무승부)<br>플레이어의 카드: " +
+            myCard +
+            "<br>딜러의 카드: " +
+            dealCard
+        );
+      }
+      // 나만 버스트 일 때때
+      else if (mySum > 21) {
+        document.write(
+          "딜러 승리 (플레이어 버스트)<br>플레이어의 카드: " +
+            myCard +
+            "\n딜러의 카드: " +
+            dealCard
+        );
+      }
+      // 딜러만 버스트 일 때
+      else if (dealSum > 21) {
+        document.write(
+          "풀레이어 승리 (딜러 버스트)<br>플레이어의 카드: " +
+            myCard +
+            "<br>딜러의 카드: " +
+            dealCard
+        );
+      }
+      // 블랙잭일 때
+      else if (dealSum === 21 || mySum === 21) {
+        // 내가 블랙잭 일 때때
+        if (mySum === 21 && dealSum !== 21) {
+          document.write(
+            "플레이어 블랙잭!!<br>플레이어의 카드: " +
+              myCard +
+              "<br>딜러의 카드: " +
+              dealCard
+          );
+        }
+        // 아니면 뭐 딜러가 블랙잭이겠지 ㅅㅂㅂ
+        else {
+          document.write(
+            "딜러 블랙잭!!<br>플레이어의 카드: " +
+              myCard +
+              "<br>딜러의 카드: " +
+              dealCard
+          );
+        }
+      }
+      // 이 모든 상황이 다 아니면 숫자 가까운사람 이김김
+      else {
+        const playerDiff = 21 - mySum;
+        const dealerDiff = 21 - dealSum;
+
+        // 내가 21과 차이가 더 없다(21에 가깝다)
+        if (playerDiff < dealerDiff) {
+          document.write(
+            "플레이어 승리<br>플레이어의 카드: " +
+              myCard +
+              "<br>딜러의 카드: " +
+              dealCard
+          );
+        }
+        // 딜러가 21과 차이가 더 없다(21에 가깝다)
+        else if (playerDiff > dealerDiff) {
+          document.write(
+            "딜러 승리<br>플레이어의 카드: " +
+              myCard +
+              "<br>딜러의 카드: " +
+              dealCard
+          );
+        }
+        // 그 외에는 무승부
+        else {
+          document.write(
+            "무승부<br>플레이어의 카드: " +
+              myCard +
+              "<br>딜러의 카드: " +
+              dealCard
+          );
+        }
+      }
+    </script>
+  </body>
+</html>

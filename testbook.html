@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!--
+    1. input type=" ? " 입력 칸의 여러가지 형태 설정
+    2. value=" ? " 입력 칸 기본값
+    3. placeholder=" ? " 빈값일때 표시되는 텍스트
+    -->
+    <input type="text" value="기본값입니다" placeholder="입력하세요" />
+
+    <!-- 
+    1. <href>는 단독으로 쓰는 태그가 아님. a, link, img 등의 속성으로 사용됨
+    2. 링크 목적지의 URL을 지정할 때 사용
+    -->
+    <a href="https://example.com">예시 링크</a>
+
+    <!-- 
+    1. <img>는 이미지를 삽입하는 태그
+    2. src: 이미지 경로
+    3. alt: 대체 텍스트 (이미지 로딩 실패 시 표시됨)
+    -->
+    <img src="image.jpg" alt="대체 텍스트" />
+
+    <!-- 
+    1. <a> 태그는 하이퍼링크를 생성함
+    2. href 속성으로 연결할 주소를 지정
+    3. 클릭하면 해당 링크로 이동
+    -->
+    <a href="https://google.com">구글로 이동</a>
+
+    <!-- 
+    1. class 속성은 여러 요소에 공통된 스타일 또는 동작을 적용할 때 사용
+    2. CSS나 JS에서 '.' 으로 선택 가능
+    -->
+    <div class="box">박스 요소</div>
+
+    <!-- 
+    1. id 속성은 해당 요소의 고유 식별자
+    2. 한 문서 내에서 중복되면 안됨
+    3. CSS나 JS에서 '#' 으로 선택 가능
+    -->
+    <p id="main-text">주요 텍스트입니다.</p>
+
+    <!--
+    1. <style> 태그는 문서 내부에 CSS를 직접 작성할 때 사용
+    2. 보통 <head> 안에 작성함
+    -->
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+    </style>
+
+    <!-- 콘텐츠 관련 -->
+    <div class="main">본문 영역입니다.</div>
+    <div class="post">게시글 내용입니다.</div>
+    <div class="user">사용자 정보</div>
+    <div class="profile">프로필 박스</div>
+    <div class="date">2025.04.14</div>
+    <div class="author">작성자: 홍길동</div>
+    <div class="comment">댓글들</div>
+    <div class="reply">답글</div>
+    <div class="side">사이드바</div>
+
+    <!-- 요소를 감싸는 블록 -->
+    <div class="container">전체 감싸는 박스</div>
+    <div class="wrapper">내부 정렬용</div>
+    <div class="section">섹션 구역</div>
+    <div class="row">가로 정렬</div>
+
+    <!-- 내비게이션 -->
+    <nav class="navbar">상단 메뉴</nav>
+    <ul class="menu">
+      <li class="menu-item">항목</li>
+    </ul>
+
+    <!-- 미디어 -->
+    <img class="thumbnail" src="..." />
+    <video class="video-player">...</video>
+
+    <!-- 텍스트 관련 -->
+    <p class="title">제목</p>
+    <span class="subtitle">부제목</span>
+    <p class="description">설명</p>
+
+    <!-- 폼 관련 -->
+    <input class="input-text" type="text" />
+    <button class="btn">버튼</button>
+
+    <!-- 형태나 위치 -->
+    <div class="box"></div>
+    <div class="card"></div>
+    <div class="row"></div>
+    <div class="col"></div>
+
+    <!-- 상태 관련 -->
+    <div class="active">활성 상태</div>
+    <div class="disabled">비활성화 상태</div>
+    <div class="hidden">숨김</div>
+
+    <!-- 실무에서 자주 쓰이는 조합!!! -->
+    <div class="container">
+      <div class="wrapper">
+        <header class="header">...</header>
+        <nav class="nav">...</nav>
+
+        <main class="main">
+          <article class="post">
+            <h1 class="title">제목</h1>
+            <p class="date">2025.04.14</p>
+            <div class="content">본문 내용</div>
+            <div class="author">작성자</div>
+          </article>
+          <section class="comment">댓글 영역</section>
+        </main>
+
+        <aside class="side">추천 글</aside>
+        <footer class="footer">하단</footer>
+      </div>
+    </div>
+  </body>
+</html>
